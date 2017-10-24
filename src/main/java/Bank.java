@@ -1,3 +1,4 @@
+
 /**
  * Implement a bank class.
  * <p>
@@ -8,9 +9,14 @@
  * @see <a href="https://cs125.cs.illinois.edu/lab/8/">Lab 8 Description</a>
  */
 public class Bank {
-
-    public String bankName;
-
+    /**
+     * Name of the Bank.
+     *
+     */
+    private String bankName;
+    /**
+     *
+     */
     public Bank() {
         bankName = "Illini Bank";
     }
@@ -29,6 +35,16 @@ public class Bank {
         /*
          * Implement this function
          */
+        if (amount < 0.0 || bankAccount.GetNum() == 0 || bankAccount.GetOwnerName() == null) {
+            return false;
+        }
+        if (bankAccount.GetBal() - amount >= 0.0) {
+            double newBal = bankAccount.GetBal() - amount;
+            bankAccount.SetAccountBal(newBal);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -45,6 +61,12 @@ public class Bank {
         /*
          * Implement this function
          */
+        if (amount < 0.0 || bankAccount.GetNum() == 0 || bankAccount.GetOwnerName() == null) {
+            return false;
+        }
+        double newBal = amount + bankAccount.GetBal();
+        bankAccount.SetAccountBal(newBal);
+        return true;
     }
 
     /**
@@ -64,6 +86,20 @@ public class Bank {
         /*
          * Implement this function
          */
+        if (amount < 0.0 || source.GetNum() == 0 || source.GetOwnerName() == null
+                || source.GetNum() == destination.GetNum() || destination.GetNum() == 0
+                || destination.GetOwnerName() == null) {
+            return false;
+        }
+        if (source.GetBal() - amount >= 0.0) {
+            double newBal = source.GetBal() - amount;
+            double newBal2 = amount + source.GetBal();
+            source.SetAccountBal(newBal);
+            destination.SetAccountBal(newBal2);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -77,6 +113,10 @@ public class Bank {
         /*
          * Implement this function
          */
+        if (bankAccount.GetNum() == 0 || bankAccount.GetOwnerName() == null) {
+            return;
+        }
+        bankAccount.SetOwnerName(name);
     }
 
     public static int totalAccounts = 0;
@@ -89,6 +129,7 @@ public class Bank {
         /*
          * Implement this function
          */
+        return totalAccounts;
     }
 
     /**
@@ -103,10 +144,10 @@ public class Bank {
         System.out.println("We are excited to have you banking with us!\n\n");
 
         // Create Bank Accounts
-        BankAccount account1 = new BankAccount("John Doe", BankAccountType.CHECKINGS);
+        BankAccount account1 = new BankAccount("John Doe", BankAccount.BankAccountType.CHECKINGS);
         System.out.println("Bank account for John Doe created");
 
-        BankAccount account2 = new BankAccount("Jony Ive", BankAccountType.STUDENT);
+        BankAccount account2 = new BankAccount("Jony Ive", BankAccount.BankAccountType.STUDENT);
         System.out.println("Bank account for Johy Ive created\n\n");
 
         // Deposit money to both accounts and print new balance
